@@ -24,27 +24,41 @@ class Brute
 	for ($j=65; $j<=90; $j++) {     
 	    for ($k=65; $k<=90; $k++) {     
 		for ($t=65; $t<=90; $t++) {     
-		    $var = chr($i).chr($j).chr($k).chr($t)."<br>";      
+		    $var = chr($i).chr($j).chr($k).chr($t);      
 		    $md5 = md5($var);
 		    $crc32 = crc32($var);
-		    $base64 = base64_encore($var);
+		    $base64 = base64_encode($var);
 		    $sha1 = sha1($var);
+		    
+		    print($this->origin."\n");
 
-		    if ($hash === $md5) {
-			$origin = $var;
+		    if (strcmp($md5, '585adf88cdd3693831b0748f409ce846') === 0) {
+			$this->origin = "toto";
 		    }
-		    if ($hash === $crc32) {
-			$origin = $var;
+		    print($this->origin);
+
+		    if (strcmp($this->hash, $md5) === 0) {
+			$this->origin = $var;
+			print("-------md5");
+			break;
+		    } elseif (strcmp($this->hash, $crc32) === 0) {
+			$this->origin = $var;
+			print("-------crc32");
+			break;
+		    } elseif (strcmp($this->hash, $base64) === 0) {
+			$this->origin = $var;
+			print("-------base64");
+			break;
+		    } elseif (strcmp($this->hash, $sha1) === 0) {
+			$this->origin = $var;
+			print("-------sha1");
+			break;
+		    } else {
+			//print("-------nothing found");
 		    }
- 		    if ($hash === $base64) {
-			$origin = $var;
 		    }
-		    if ($hash === $sha1) {
-			$origin = $var;
-		    }
-		    print($var);
-}
-}
-}
+		}
+	    }
+	}
     }
 }
