@@ -14,12 +14,15 @@ class Debug
     /** Cette fonction retourne le deuxième élèment de la liste */
     public function myList()
     {
-        list($a, $a) = array(1, 2, 3, 4);
+        
+        list($b, $a, $c, $d) = array(1, 2, 3, 4);
+
 
         return array(
                 'return' => $a,
                 'cheat' => $this->token,
             );
+
     }
 
     /** Cette fonction retourne vrai si array1 est égale à array2
@@ -39,7 +42,7 @@ class Debug
         );
 
         return array(
-            'return' => $array1 === $array2,
+            'return' => $array1 == $array2,
             'cheat' => $array1['token'],
         );
     }
@@ -52,7 +55,7 @@ class Debug
         $b = 'x';
 
         $testa = (false == $a) ? true : false;
-        $testb = ($a == $b) ? true : false;
+        $testb = ($a != $b) ? true : false;
         $testc = ($b == true) ? true : false;
 
         return $testa && $testb && $testc;
@@ -62,6 +65,12 @@ class Debug
      Uniquement des valeurs scalaires */
     public function increment($a)
     {
+        if (gettype($a) == 'string') {
+            $tmp = substr($a, 0,  strlen($a) - 1);
+            $tmp2 = substr($a, -1, 1);
+            $tmp2++;
+            return $tmp . $tmp2;
+        }
         return ++$a;
     }
 }
