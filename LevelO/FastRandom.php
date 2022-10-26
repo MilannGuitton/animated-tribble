@@ -19,11 +19,9 @@ class FastRandom
      */
     public function generateRandomNumbers()
     {
-        // @TODO You have to modify this ONE
-        // Please don't return the ref :D
-        sleep(1);
-        
-        return $this->generateRandomNumbersLaRef();
+        $numbers = range(1, $this->numberOfInteger);
+        shuffle($numbers);
+        return array_slice($numbers, 0, $this->numberOfInteger);
     }
 
 
