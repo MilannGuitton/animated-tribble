@@ -84,7 +84,23 @@ class MyMatrix
     public function fillZero()
     {
         /** @TODO */
+	$coordinatelist_i = array();
+	$coordinatelist_j = array();
+        for ($i = 0; $i <= $this->iMax; ++$i) {
+            for ($j = 0; $j <= $this->jMax; ++$j) {
+		array_push($coordinatelist_i, $i);
+		array_push($coordinatelist_j, $j);
+	    }
+	}
 
+	for ($k = 0; $k < count($coordinatelist_i); ++$k) {
+            for ($j = 0; $j <= $this->jMax; ++$j) {
+		$this->matrix[$coordinatelist_i[$k]][$j] = 0;
+	    }
+            for ($i = 0; $i <= $this->jMax; ++$i) {
+		$this->matrix[$i][$coordinatelist_j[$k]] = 0;
+	    }
+	}
         return $this;
     }
 }
