@@ -43,6 +43,7 @@ class MyBinaryTreeInArray
 
             return $this;
         }
+
         $index = $this->course(1, $value); //on démarre le parcours par la root
         $this->tree[$index] = $value;
 
@@ -68,7 +69,20 @@ class MyBinaryTreeInArray
      */
     public function course($index, $value)
     {
-        /** @TODO */
+        if (! $this->nodeExist($index)) {
+            $this->tree[$index] = null;
+        }
+
+        if (is_null($this->tree[$index])) {
+            return $index;
+        }
+
+        if ($this->tree[$index] > $value) {
+            return $this->course($this->getLeftIndex($index), $value);
+        }
+        if ($this->tree[$index] < $value) {
+            return $this->course($this->getRightIndex($index), $value);
+        }
     }
 
     /**
