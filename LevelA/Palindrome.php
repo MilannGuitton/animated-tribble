@@ -20,9 +20,8 @@ class Palindrome
      */
     public function generatePalindrome()
     {
-        /** @TODO */
-
-        return 'abccba';
+        $chars = mb_str_split($this->str, 1, "UTF-8" ?: mb_internal_encoding());
+        $output = implode('', array_reverse($chars));
+        return $this->str . $output;
     }
-
 }
