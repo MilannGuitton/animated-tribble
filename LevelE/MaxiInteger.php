@@ -45,7 +45,28 @@ class MaxiInteger
      */
     private function realSum($a, $b)
     {
-        /** @TODO */
+        $a = strrev($a->getValue());
+        $b = strrev($b->getValue());
+
+        $c = strlen(max($a, $b));
+
+        $arr = array_fill(0, $c + 1, 0);
+
+        for ($i = 0; $i < $c; $i++) {
+            $sum = $a[$i] + $b[$i] + $arr[$i];
+            if ($sum > 9) {
+                $arr[$i] = $sum - 10;
+                $arr[$i + 1] = $arr[$i + 1] + 1;
+            } else {
+                $arr[$i] = $sum;
+            }
+        }
+        $result = strrev(implode('', $arr));
+
+        if ($result[0] == 0) {
+            $result = substr($result, 1);
+        }
+        return new MaxiInteger($result);
     }
 
     private function setValue($value)
