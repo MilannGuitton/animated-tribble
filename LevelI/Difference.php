@@ -30,17 +30,28 @@ class Difference
      */
     public function whatIsTheCostPlease()
     {
-        // @ TODO
-        $lenA = strlen($this->a);
-        $lenB = strlen($this->b);
-
-        for ($i = 1; $i <= $lenA; ++$i) {
-            for ($j = 1; $j <= $lenB; ++$j) {
-                $c = ($this->a[$i - 1] === $this->b[$j - 1]) ? 0 : 1;
-                $matrix[$i][$j] = 0;
+        $a = $this->a;
+        $b = $this->b;
+        $n = strlen($a);
+        $m = strlen($b);
+        $d = array();
+        for ($i = 0; $i <= $n; $i++) {
+            $d[$i] = array();
+            $d[$i][0] = $i;
+        }
+        for ($j = 0; $j <= $m; $j++) {
+            $d[0][$j] = $j;
+        }
+        for ($j = 1; $j <= $m; $j++) {
+            for ($i = 1; $i <= $n; $i++) {
+                if ($a[$i - 1] == $b[$j - 1]) {
+                    $cost = 0;
+                } else {
+                    $cost = 1;
+                }
+                $d[$i][$j] = min($d[$i - 1][$j] + 1, $d[$i][$j - 1] + 1, $d[$i - 1][$j - 1] + $cost);
             }
         }
-
-        return $matrix[$lenA][$lenB];
+        return $d[$n][$m];
     }
 }
