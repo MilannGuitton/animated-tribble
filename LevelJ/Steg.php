@@ -147,8 +147,42 @@ class Steg
      */
     public function show($dst)
     {
-        $msg = '000010000100001000000';
-        $this->bin2Text($msg);
+
+        $dstImg = ImageCreateFromPng($dst);
+
+        list($width, $height) = getimagesize($dst);
+
+        $stop = false;
+
+        $bits = "";
+
+        for ($i = 0; $i < $width && !$stop; ++$i) {
+            for ($j = 0; $j < $height && !$stop; ++$j) {
+
+                // Extraction du triplet de couleur, r (rouge), g (vert), b (bleu)
+                $rgb = imagecolorat($dstImg, $i, $j);
+                $r = ($rgb >> 16) & 0xFF;
+                $g = ($rgb >> 8) & 0xFF;
+                $b = $rgb & 0xFF;
+
+                if (!$stop) {
+                    // echo "--------\n";
+                    $blue = decbin($b);
+                    $bits = $bits.substr($blue, -1);
+                }
+
+                //echo "Last 6 bits: ".substr($bits, -6, 6)."\n";
+                //echo "Current string: ".$bits."\n";
+
+                if (strcmp(substr($bits, -6, 6), "111111") == 0) {
+                    $stop = true;
+                }
+            }
+        }
+
+        // echo "Binary: ".$bits."\n";
+        $this->bin2Text($bits);
+        // echo "Clear txt: ".$this->clearTxt."\n";
 
         return true;
     }
